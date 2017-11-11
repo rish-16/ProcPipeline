@@ -1,2 +1,2 @@
 # VocqML
-JusChat feature extraction pipeline and data clustering algorithm
+JusChat feature extraction pipeline and feedback clustering algorithm
