@@ -61,7 +61,6 @@ try:
 		elif (sim_sum_total < 0):
 			array_counter = 0
 
-		print ('_______________________________________________________')
 except:
 	pass
 
@@ -72,3 +71,23 @@ print ('')
 print ('Sample Instance size: {}'.format(len(R)))
 print ('Sorted bucket: {}'.format(len(y)))
 print ('Unsorted bucket: {}'.format(len(unsorted)))
+
+# ------------------------------------------ DATASET OPTIMIZATION ------------------------------------------
+
+temp_arr_sorted = []
+final_arr_sorted = []
+
+for layer1 in range(len(y)):
+	for layer2 in range(len(y[layer1])):
+		for layer3 in range(len(y[layer1][layer2])):
+			ind_tag = y[layer1][layer2][layer3]
+			temp_arr_sorted.append(ind_tag)
+
+for layer1 in range(len(temp_arr_sorted)):
+	final_arr_sorted.append(str('. '.join(temp_arr_sorted[layer1]).replace("\n", "")))
+
+# ------------------------------------------ SAVING FILES ------------------------------------------
+
+with open("vocq_sorted.csv", "wb") as f:
+    writer = csv.writer(f)
+    writer.writerows(zip(final_arr_sorted[index] for index in range(len(final_arr_sorted))))
