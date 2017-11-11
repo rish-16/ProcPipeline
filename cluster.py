@@ -5,9 +5,7 @@ import pandas as pd
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from tfidf import get_result
-
-reload(sys)
-sys.setdefaultencoding('UTF8')
+# sys.setdefaultencoding('UTF8')
 
 R = open('data.txt', 'r').read()
 R = R.split('.')
@@ -62,11 +60,15 @@ try:
 
 		elif (sim_sum_total < 0):
 			array_counter = 0
+
+		print ('_______________________________________________________')
 except:
 	pass
 
 # ------------------------------------------ DATA PROCESSING SUMMARY ------------------------------------------
 
+print ('')
+print ('')
 print ('Sample Instance size: {}'.format(len(R)))
 print ('Sorted bucket: {}'.format(len(y)))
 print ('Unsorted bucket: {}'.format(len(unsorted)))
