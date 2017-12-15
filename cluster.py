@@ -1,4 +1,6 @@
 import csv
+from pprint import pprint
+import numpy as np
 import sys
 import itertools
 import pandas as pd
@@ -8,7 +10,7 @@ from tfidf import get_result
 # sys.setdefaultencoding('UTF8')
 
 R = open('data.txt', 'r').read()
-R = R.split('.')
+R = R.split('\n')
 y = []
 C = R
 temp_array = []
@@ -72,22 +74,31 @@ print ('Sample Instance size: {}'.format(len(R)))
 print ('Sorted bucket: {}'.format(len(y)))
 print ('Unsorted bucket: {}'.format(len(unsorted)))
 
-# ------------------------------------------ DATASET OPTIMIZATION ------------------------------------------
+y = np.array(y)
+y = y.reshape([y.shape[0],])
+class_labels = []
+index = 0
 
-temp_arr_sorted = []
-final_arr_sorted = []
+for cluster in y:
+	current = []
+	for feedback in cluster:
+		current.append(index)
 
-for layer1 in range(len(y)):
-	for layer2 in range(len(y[layer1])):
-		for layer3 in range(len(y[layer1][layer2])):
-			ind_tag = y[layer1][layer2][layer3]
-			temp_arr_sorted.append(ind_tag)
+	index += 1
+	class_labels.append(current)
 
-for layer1 in range(len(temp_arr_sorted)):
-	final_arr_sorted.append(str('. '.join(temp_arr_sorted[layer1]).replace("\n", "")))
+class_labels = np.array(class_labels)
+class_labels = class_labels.reshape([class_labels.shape[0]])
 
-# ------------------------------------------ SAVING FILES ------------------------------------------
+ffile = []
+cfile = []
 
-with open("vocq_sorted.csv", "wb") as f:
-    writer = csv.writer(f)
-    writer.writerows(zip(final_arr_sorted[index] for index in range(len(final_arr_sorted))))
+with open('feedbacks.txt', 'a') as ftxt:
+	for cluster in y:
+		for feedback in cluster:
+			ftxt.write('{}'.format(feedback))
+
+with open('classes.txt', 'a') as ctxt:
+	for cluster in class_labels:
+		for class_label in cluster:
+			ctxt.write('{}\n'.format(class_label))
